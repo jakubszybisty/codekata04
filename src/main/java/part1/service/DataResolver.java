@@ -11,10 +11,10 @@ import java.util.Map;
  */
 public class DataResolver {
 
-    public String findDayWithSmallestTemperatureSpread(List<Weather> data) {
-        Map<String, Integer> dayAndTemperatureSpread = new HashMap<>();
+    public int findDayWithSmallestTemperatureSpread(List<Weather> data) {
+        Map<Integer, Integer> dayAndTemperatureSpread = new HashMap<>();
         data.forEach(d -> dayAndTemperatureSpread.put(d.getDayNumber(), findDifference(d)));
-        Map.Entry<String, Integer> dayWithBiggestTemperatureSpread = dayAndTemperatureSpread.entrySet().stream().min(Map.Entry.comparingByValue(Integer::compareTo)).get();
+        Map.Entry<Integer, Integer> dayWithBiggestTemperatureSpread = dayAndTemperatureSpread.entrySet().stream().min(Map.Entry.comparingByValue(Integer::compareTo)).get();
         return dayWithBiggestTemperatureSpread.getKey();
     }
 

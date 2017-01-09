@@ -42,7 +42,7 @@ public class DataImporter {
         String minTemperature = line[3];
         if (StringUtils.isNumeric(numberOfDay) && StringUtils.isNumeric(maxTemperature) && StringUtils.isNumeric(minTemperature)) {
             Weather weather = new Weather();
-            weather.setDayNumber(numberOfDay);
+            weather.setDayNumber(Integer.parseInt(numberOfDay));
             weather.setMaxTemperature(Integer.parseInt(maxTemperature));
             weather.setMinTemperature(Integer.parseInt(minTemperature));
             weatherData.add(weather);

@@ -13,9 +13,9 @@ import static org.junit.Assert.assertEquals;
  * Created by Jakub on 1/9/2017.
  */
 public class DataResolverTest {
-    private static final String ID_1 = "1";
-    private static final String ID_2 = "2";
-    private static final String ID_3 = "3";
+    private static final int ID_1 = 1;
+    private static final int ID_2 = 2;
+    private static final int ID_3 = 3;
 
     private DataResolver dataResolver = new DataResolver();
 
@@ -26,7 +26,7 @@ public class DataResolverTest {
         weathers.add(new Weather(ID_2, 2, 20));
         weathers.add(new Weather(ID_3, 3, 30));
 
-        String dayWithSmallestTemperatureSpread = dataResolver.findDayWithSmallestTemperatureSpread(weathers);
+        int dayWithSmallestTemperatureSpread = dataResolver.findDayWithSmallestTemperatureSpread(weathers);
         assertEquals(ID_1, dayWithSmallestTemperatureSpread);
     }
 }

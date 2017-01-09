@@ -5,7 +5,7 @@ package part1.model;
  */
 public class Weather {
 
-    private String dayNumber;
+    private int dayNumber;
 
     private int maxTemperature;
 
@@ -15,17 +15,17 @@ public class Weather {
 
     }
 
-    public Weather(String dayNumber, int minTemperature, int maxTemperature) {
+    public Weather(int dayNumber, int minTemperature, int maxTemperature) {
         this.dayNumber = dayNumber;
         this.minTemperature = minTemperature;
         this.maxTemperature = maxTemperature;
     }
 
-    public String getDayNumber() {
+    public int getDayNumber() {
         return dayNumber;
     }
 
-    public void setDayNumber(String dayNumber) {
+    public void setDayNumber(int dayNumber) {
         this.dayNumber = dayNumber;
     }
 
@@ -52,15 +52,15 @@ public class Weather {
 
         Weather weather = (Weather) o;
 
+        if (dayNumber != weather.dayNumber) return false;
         if (maxTemperature != weather.maxTemperature) return false;
-        if (minTemperature != weather.minTemperature) return false;
-        return dayNumber != null ? dayNumber.equals(weather.dayNumber) : weather.dayNumber == null;
+        return minTemperature == weather.minTemperature;
 
     }
 
     @Override
     public int hashCode() {
-        int result = dayNumber != null ? dayNumber.hashCode() : 0;
+        int result = dayNumber;
         result = 31 * result + maxTemperature;
         result = 31 * result + minTemperature;
         return result;

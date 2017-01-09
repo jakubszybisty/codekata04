@@ -16,7 +16,7 @@ public class KataRunner {
 
     public void run(String fileName) {
         List<Weather> data = dataImporter.importData(fileName);
-        String result = dataResolver.findDayWithSmallestTemperatureSpread(data);
+        int result = dataResolver.findDayWithSmallestTemperatureSpread(data);
         System.out.println(result);
     }
 

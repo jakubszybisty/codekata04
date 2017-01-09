@@ -21,7 +21,7 @@ public class DataImporterTest {
     public void shouldImportData() {
         List<Weather> data = dataImporter.importData(filePath);
         Weather weather = new Weather();
-        weather.setDayNumber("30");
+        weather.setDayNumber(30);
         weather.setMaxTemperature(90);
         weather.setMinTemperature(45);
         assertEquals(NUMBER_OF_DAYS, data.size());
