@@ -4,6 +4,9 @@ import org.junit.Test;
 import part1.model.Weather;
 import part1.service.DataImporter;
 
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -14,12 +17,13 @@ import static org.junit.Assert.assertEquals;
 public class DataImporterTest {
 
     private static final int NUMBER_OF_DAYS = 30;
-    private static final String filePath = "weather.dat";
+    private static final String fileName = "weather.dat";
     private DataImporter dataImporter = new DataImporter();
 
     @Test
-    public void shouldImportData() {
-        List<Weather> data = dataImporter.importData(filePath);
+    public void shouldImportData() throws URISyntaxException {
+        Path weatherData = Paths.get(this.getClass().getClassLoader().getResource(fileName).toURI());
+        List<Weather> data = dataImporter.importData(weatherData);
         Weather weather = new Weather();
         weather.setDayNumber(30);
         weather.setMaxTemperature(90);

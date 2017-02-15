@@ -1,19 +1,19 @@
-package groovy.part1
+package groovy.part2
 
-import part1.service.DataImporter
+import part2.service.DataImporter
 import spock.lang.Specification
 
 import java.nio.file.Path
 import java.nio.file.Paths
 
 /**
- * Created by jszybisty on 2/15/2017.
+ * Created by Jakub on 15.02.2017.
  */
 class DataImporterTest extends Specification {
 
     def "should return 30 teams"() {
         given:
-        def fileName = "weather.dat"
+        def fileName = "football.dat"
         def Path weatherData = Paths.get(this.getClass().getClassLoader().getResource(fileName).toURI());
         DataImporter dataImporter = new DataImporter();
 
@@ -21,10 +21,6 @@ class DataImporterTest extends Specification {
         def returnedData = dataImporter.importData(weatherData)
 
         then:
-        returnedData.size() == 30
+        returnedData.size() == 20
     }
-
-
-
-
 }

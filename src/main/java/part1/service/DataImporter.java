@@ -1,61 +1,40 @@
 package part1.service;
 
 
-import org.apache.commons.lang3.StringUtils;
 import part1.model.Weather;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Jakub on 1/9/2017.
  */
 public class DataImporter {
-    private static final String FILE_REGEX = "\\s+";
-    private String line;
-    private List<Weather> weatherData = new ArrayList<>();
-    public List<Weather> importData(String fileName) {
-        int counter = 1;
+
+    public List<Weather> importData(Path weatherData) {
         try {
-            ClassLoader classLoader = getClass().getClassLoader();
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(classLoader.getResource(fileName).getFile())));
-            while ((line = bufferedReader.readLine()) != null) {
-                if (counter >= 3) {
-                    String[] data = line.split(FILE_REGEX);
-                    addNewWeatherRow(data);
-                }
-                counter++;
-            }
+            return Files.readAllLines(weatherData).stream()
+                    .map(line -> line.trim().split("(\\s)+"))
+                    .filter(row -> row[0].matches("\\d+"))
+                    .map(this::parseWeather)
+                    .collect(Collectors.toList());
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return weatherData;
-    }
-
-    private void addNewWeatherRow(String[] line) {
-        checkForTraps(line);
-        String numberOfDay = line[1];
-        String maxTemperature = line[2];
-        String minTemperature = line[3];
-        if (StringUtils.isNumeric(numberOfDay) && StringUtils.isNumeric(maxTemperature) && StringUtils.isNumeric(minTemperature)) {
-            Weather weather = new Weather();
-            weather.setDayNumber(Integer.parseInt(numberOfDay));
-            weather.setMaxTemperature(Integer.parseInt(maxTemperature));
-            weather.setMinTemperature(Integer.parseInt(minTemperature));
-            weatherData.add(weather);
+            throw new RuntimeException(e);
         }
     }
 
-    private void checkForTraps(String[] line) {
-        if (line[2].length() == 3) {
-            line[2] = line[2].substring(0, 2);
-        }
-        if (line[3].length() == 3) {
-            line[3] = line[3].substring(0, 2);
-        }
+    private Weather parseWeather(String[] row) {
+        Weather weather = new Weather();
+        weather.setDayNumber(cleanValue(row[0]));
+        weather.setMinTemperature(cleanValue(row[2]));
+        weather.setMaxTemperature(cleanValue(row[1]));
+        return weather;
+    }
+
+    private int cleanValue(String s) {
+        return Integer.parseInt(s.replaceAll("[*]", ""));
     }
 }
