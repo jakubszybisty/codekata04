@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import part1.model.Weather;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,14 +15,14 @@ import java.util.List;
  * Created by Jakub on 1/9/2017.
  */
 public class DataImporter {
-    private static final String C_PATH = "C:\\";
     private static final String FILE_REGEX = "\\s+";
     private String line;
     private List<Weather> weatherData = new ArrayList<>();
     public List<Weather> importData(String fileName) {
         int counter = 1;
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(C_PATH + fileName));
+            ClassLoader classLoader = getClass().getClassLoader();
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(classLoader.getResource(fileName).getFile())));
             while ((line = bufferedReader.readLine()) != null) {
                 if (counter >= 3) {
                     String[] data = line.split(FILE_REGEX);
