@@ -11,7 +11,7 @@ import java.nio.file.Paths
  */
 class DataImporterTest extends Specification {
 
-    def "should return 30 teams"() {
+    def "should return 20 teams"() {
         given:
         def fileName = "football.dat"
         def Path weatherData = Paths.get(this.getClass().getClassLoader().getResource(fileName).toURI());
